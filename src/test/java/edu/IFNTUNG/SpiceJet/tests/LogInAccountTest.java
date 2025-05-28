@@ -5,11 +5,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
+import java.time.Duration;
 
 public class LogInAccountTest {
     private WebDriver driver;
@@ -37,12 +41,8 @@ public class LogInAccountTest {
     public void LogIn(){
         WebElement LogInButton = driver.findElement(By.xpath("//div[text() = 'Login']"));
         LogInButton.click();
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        WebElement NumberField = driver.findElement(By.xpath("//input[@data-testid='user-mobileno-input-box']"));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement NumberField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@data-testid='user-mobileno-input-box']")));
         NumberField.sendKeys("123456");
         WebElement PasswordField = driver.findElement(By.xpath("//input[@data-testid = 'password-input-box-cta']"));
         PasswordField.sendKeys("123456");
